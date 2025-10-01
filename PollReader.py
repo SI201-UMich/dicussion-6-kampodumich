@@ -46,16 +46,6 @@ class PollReader():
     def build_data_dict(self):
 
         seperated = row.strip().split(',')
-        """
-        Reads all of the raw data from the CSV and builds a dictionary where
-        each key is the name of a column in the CSV, and each value is a list
-        containing the data for each row under that column heading.
-
-        There may be a couple bugs in this that you will need to fix.
-        Remember that the first row of a CSV contains all of the column names,
-        and each value in a CSV is seperated by a comma.
-        """
-
 
             # map each part of the row to the correct column
         self.data_dict['month'].append(seperated[0])
@@ -77,7 +67,15 @@ class PollReader():
             str: A string indicating the candidate with the highest polling percentage or EVEN,
              and the highest polling percentage.
         """
-        pass
+        max_harris = max(self.data_dict['Harris result'])
+        max_trump = max(self.data_dict['Trump result'])
+
+        if max_harris > max_trump:
+            return f"Harris {(max_harris * 100):.1f}%"
+        elif max_trump > max_harris:
+            return f"Trump {(max_trump * 100):.1f}%"
+        else:
+            return f"EVEN {(max_harris * 100):.1f}%"
 
 
     def likely_voter_polling_average(self):
